@@ -1,20 +1,19 @@
-Package: 	pravetz
-Type: 		Package
-Title: 	 	Prediction tools
-Date: 		2016-02-15
-Version: 	0.0.0.1
-Authors@R: 	person("Denitsa", "Panova", email = "denitsa.panova@barcelonagse.eu", role = c("aut", "cre"))
+Package: pravetz
+Type: Package
+Title: Prediction tools
+Date: 2016-02-15
+Version: 0.0.0.1
+Authors@R: person("Denitsa", "Panova", email = "denitsa.panova@barcelonagse.eu", role = c("aut", "cre"))
 		person("Felix", "Gutmann", email = "felix.gutmann@barcelonagse.eu", role = c("aut", "cre"))
 		person("Thomas", "Vincente", email = "thomas.vincente@barcelonagse.eu", role = c("aut", "cre"))
-Maintainers: 	Denitsa Panova <denitsa.panova@barcelonagse.eu>
-		Felix Gutmann"<felix.gutmann@barcelonagse.eu>
-		Thomas Vincente <thomas.vincente@barcelonagse.eu>
-Description: 	Replicate predication results from kaggle competition
-Depends: 	R (>= 3.2.3)
-    		randomForest
-		caret
-Suggests: 	randomForest
-		caret
-License: 	see LICENCE
-LazyData: 	true
-
+Maintainers: Denitsa Panova <denitsa.panova@barcelonagse.eu>
+    Felix Gutmann"<felix.gutmann@barcelonagse.eu>
+    Thomas Vincente <thomas.vincente@barcelonagse.eu>
+Description: Replicate predication results from kaggle competition
+Depends:
+    R (>= 3.2.3)
+Suggests:
+    randomForest
+License: see LICENCE
+LazyData: true
+RoxygenNote: 5.0.1
