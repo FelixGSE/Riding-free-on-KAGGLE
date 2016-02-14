@@ -11,6 +11,56 @@
 #				this project
 
 ################################################################################
+# Shuffle a data set by row or/and column
+################################################################################
+
+shuffleDF <- function(data, row = TRUE, col = FALSE ){
+N <- nrow(data)
+M <- ncol(data)
+if( row == TRUE & col == FALSE ){
+shuffeledDF <- data[sample.int(N),]
+}
+if( row == FALSE & col == TRUE ) {
+shuffeledDF <- data[,sample.int(M)]
+}
+if( row == TRUE & col == TRUE ) {
+shuffeledDF <- data[sample.int(N),sample.int(M)]
+}
+return(shuffeledDF)
+}
+
+################################################################################
+# Erase duplicate rows in
+################################################################################
+
+complementDF <- function(DF1,DF2){
+df1 <- DF1
+df2 <- DF2
+all <- rbind(df1,df2) 
+diffDF <- all[!duplicated(all, fromLast = FALSE ) &!duplicated(all,fromLast = TRUE),]
+return(diffDF)
+}
+
+################################################################################
+# Compute frequency for each unique element in a vector
+################################################################################
+
+sampInfo <- function(data){
+N 	<- length(data)
+cla <- length(unique(data))
+sampling.info <- as.data.frame(cbind(class=1:cla,count=NA,percent=NA))
+for(i in 1:cla){
+	# Compute the number of class in the training set
+	temp <- length(which(data==i))
+	# Save absolute number of class i in data frame
+	sampling.info[i,2] <- temp
+	# Save the percentage share of each class in data frame
+	sampling.info[i,3] <- round((temp/N)*100,2)
+}
+return(sampling.info)
+}
+
+################################################################################
 # Very basic function to partition data in two parts
 ################################################################################
 
@@ -186,7 +236,7 @@ confusionMatrix <- function(truth,prediction){
 # Use acc function for other methods and more arguments
 ################################################################################
 
-validateForest <- function( data , response , k = 5 , nt = 500 ){
+validateForest <- function( data , response , k = 5 , nt = 500 , mt = NULL ){
 # Compute number of rows
 N  	  	<- nrow(data)
 # Shuffle row indices
@@ -208,7 +258,7 @@ for(i in 1:k){
     x  <- data[split[[i]],]
     y  <- response[split[[i]]]
     # Compute model
-    mod <- randomForest( Y ~. , data = D ,ntree = nt )
+    mod <- randomForest( Y ~. , data = D ,ntree = nt , mt = mt )
     # Cpmpute prediction 
   	pre <- predict(mod, newdata = x , type ='class' )
 	# Compute accuracy of the model
@@ -339,6 +389,21 @@ plotDens <- function(data,i){
   		 fill = factor(data[,"popularity"]), 
         alpha = I(.5), 
          ylab = "Density")  
+}
+
+################################################################################
+# Get only unique oversampled minority class for a classification problem
+################################################################################
+
+autoSmote <- function( data, p = 200 , k = 10, s  ){
+mod  <- SMOTE(popularity ~ . , data = data, perc.over = p , k = k )
+samp <- mod[(mod$popularity==s),]
+orig <- data[data$popularity==s,]
+df2  <- samp
+df1  <- orig
+all  <- rbind(df1,df2) 
+o    <- all[!duplicated(all, fromLast = FALSE ) &!duplicated(all,fromLast = TRUE),] 
+return(o)
 }
 
 ################################################################################

@@ -17,6 +17,7 @@
 ### Clear workspace
 
 ### Load Packages 
+if (!require("DMwR")) install.packages("DMwR"); library(DMwR)
 
 ### Set working directory for other R-Scripts
 setwd("/home/felix/Dropbox/GSE/DS_GROUP_BOX/15D012 - Advanced Computational Methods/Work/R-Scripts/Felix")
@@ -210,10 +211,65 @@ te05 <- cbind( toOne(test[,scaleD]) ,  test[,ok] , int_df2,
 tr06 <- cutSet(TR, size = c( 8000, 10000, 5712, 999, 47 ) )
 
 ################################################################################
-# Config 8 - include time delta
+# Config 7 
 ################################################################################
 
 tr08 <- cbind( timedelta = training$timedelta , tr03 )
+
+################################################################################
+# Config 8
+################################################################################
+
+temp  <- training
+temp  <- temp[,!(names(temp) %in% c("id","url")  )]
+sub09 <- dataSplit(temp,0.9)
+subTR <- sub09$TrainingSet
+
+te 			  <- subTR[!subTR$popularity ==4 & !subTR$popularity == 5 ,]
+te$popularity <- as.factor(as.character(te$popularity))
+
+samp 	  <- autoSmote(te, p = 100 , k = 10, 3 )
+
+subTR <- shuffleDF(rbind(subTR,samp))
+subTR$popularity <- as.factor(subTR$popularity )
+subTE <- sub09$TestSet
+subTE$popularity <- as.factor(subTE$popularity )
+
+################################################################################
+# Config 9 - I am desperate
+################################################################################
+
+set10 <- cutSet( training, size = floor( 0.1 * c( 9478, 13764, 5712 , 999 , 47) ) )
+
+diff  <- complementDF(training,set10)
+subTR <- diff
+
+te 			  <- subTR[!subTR$popularity ==4 & !subTR$popularity == 5 ,]
+te$popularity <- as.factor(as.character(te$popularity))
+
+samp 	  <- autoSmote(te, p = 100 , k = 10, 3 )
+
+subTR <- shuffleDF(rbind(subTR,samp))
+
+subTR$popularity <- as.factor(as.numeric(subTR$popularity))
+
+subTE <- set10
+subTE$popularity <- as.factor(subTE$popularity )
+
+################################################################################
+# Config 10: Extended data
+################################################################################
+
+temp <- training[-rows,!(names(training) %in% c("id","url") ) ]
+# temp$popularity <- as.factor(as.character(temp$popularity))
+te 	 <- temp[!temp$popularity ==4 & !temp$popularity == 5 ,]
+te$popularity <- as.factor(as.character(te$popularity))
+
+samp 	  <- autoSmote(te, p = 50 , k = 10, 3 )
+
+temp2 <- shuffleDF(rbind(temp,samp))
+temp2[temp2$popularity == 5,] <- 4
+temp2$popularity <- as.factor(as.character(temp2$popularity))
 
 ################################################################################
 # Option: Save data
