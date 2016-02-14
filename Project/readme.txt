@@ -14,7 +14,7 @@ structure:
 				identifications (besides their names):
 				- F_ --> File
 				- First digit 0: Data related file 
-				- Frist digit 1: Different models 
+				- Frist digit 1: Model related file
 				- Second digit: Running number	
 
 ###################################################################################
