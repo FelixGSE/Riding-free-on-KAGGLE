@@ -2,6 +2,15 @@
 
 ###################################################################################
 
+# Authors:      Denitsa Panova, Felix Gutmann, Thomas Vincente
+# Programm:     Barcelona graduate school of economics - M.S. Data Science 
+# Course:       15D012 - Advanced Computational Methods 
+# Type:         Classification competition
+
+###################################################################################
+
+###################################################################################
+
 This is the main working repository for the Kaggle competition. It has the following
 structure:
 
