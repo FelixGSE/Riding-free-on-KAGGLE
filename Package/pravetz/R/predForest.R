@@ -3,10 +3,9 @@
 # ----------------------------------------------------------------------
 #' Performs a random forest model based on input specifications 
 #' 
-#' This functions reproduces in some ways the result achieved in the
-#' in the Kaggle competition so far. The function performing based on the 
-#' arguments a random forest to predict the test data. By now the function
-#' is somehow, but is expecting similar input data as in the competition
+#' This functions reproduces in some way the results achieved in the
+#' in the Kaggle competition so far. In doing so function performs based on the 
+#' arguments a random forest to predict the test data. 
 #'
 #' @param training A data frame containing both the predicators and response
 #' @param Nresponse Character defining the name of the response varaible in training

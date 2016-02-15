@@ -22,10 +22,9 @@ predictForest(training = NULL, Nresponse = "popularity", test = NULL,
 A data frame containing predicted labels for each id in the \code{test} data
 }
 \description{
-This functions reproduces in some ways the result achieved in the
-in the Kaggle competition so far. The function performing based on the 
-arguments a random forest to predict the test data. By now the function
-is somehow, but is expecting similar input data as in the competition
+This functions reproduces in some way the results achieved in the
+in the Kaggle competition so far. In doing so function performs based on the 
+arguments a random forest to predict the test data.
 }
 \examples{
 # Create a simple training data set similiar to the competition set
