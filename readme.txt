@@ -11,9 +11,9 @@
 
 ###################################################################################
 
-1) Package:	Stores the package related to this project (names 'pravetz')
+1) Package:	Stores the package related to this project (name 'pravetz')
 2) Project:	Stores all project related files (Data, literature, scripts etc,
-		see readme.txt inside the folder)
+		look readme.txt inside the folder for more information)
 
 ###################################################################################
 
