@@ -22,7 +22,7 @@
 #' Create test data set
 #' features <- matrix( rnorm(size,0,10), nrow = 100, ncol = 3 )
 #' response <- sample( size , 5 , replace = FALSE )
-#' training <- data.frame( features , res )
+#' training <- data.frame( features , response )
 #' colnames(training) <- c("F1","F2","F3","popularity")
 #'
 #' # Create test data set
@@ -74,6 +74,7 @@ if( Nresponse %in% names(training) == FALSE  ){
 stop("Error: No correct response specified") } 
 
 response <- training[,Nresponse]
+
 if ( is.factor( response ) == FALSE ) { 
 response <- as.factor( response )
 }
