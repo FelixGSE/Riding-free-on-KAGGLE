@@ -5,13 +5,14 @@
 #' 
 #' This functions reproduces in some ways the result achieved in the
 #' in the Kaggle competition so far. The function performing based on the 
-#' arguments a random forest model to predict the test data.
-
+#' arguments a random forest to predict the test data. By now the function
+#' is somehow, but is expecting similar input data as in the competition
+#'
 #' @param training A data frame containing both the predicators and response
 #' @param Nresponse Character defining the name of the response varaible in training
 #' @param test A data frame containing the test data
 #' @param drops A vector containing column names that should be droped from the training set
-#' @param nt An integer specifying how many trees should be used in random 
+#' @param nt An integer specifying how many trees should be used in random. By deault = 1000
 #' @return A data frame containing predicted labels for each id in the \code{test} data
 #' @export
 #' @examples
