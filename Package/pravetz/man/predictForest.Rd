@@ -16,7 +16,7 @@ predictForest(training = NULL, Nresponse = "popularity", test = NULL,
 
 \item{drops}{A vector containing column names that should be droped from the training set}
 
-\item{nt}{An integer specifying how many trees should be used in random}
+\item{nt}{An integer specifying how many trees should be used in random. By deault = 1000}
 }
 \value{
 A data frame containing predicted labels for each id in the \code{test} data
@@ -24,7 +24,8 @@ A data frame containing predicted labels for each id in the \code{test} data
 \description{
 This functions reproduces in some ways the result achieved in the
 in the Kaggle competition so far. The function performing based on the 
-arguments a random forest model to predict the test data.
+arguments a random forest to predict the test data. By now the function
+is somehow, but is expecting similar input data as in the competition
 }
 \examples{
 # Create a simple training data set similiar to the competition set

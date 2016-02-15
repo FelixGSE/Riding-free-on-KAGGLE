@@ -75,8 +75,7 @@ if( Nresponse %in% names(training) == FALSE  ){
 stop("Error: No correct response specified") } 
 
 response <- training[,Nresponse]
-
-} else if ( is.factor( response ) == FALSE ) { 
+if ( is.factor( response ) == FALSE ) { 
 response <- as.factor( response )
 }
 
