@@ -23,7 +23,7 @@ A data frame containing predicted labels for each id in the \code{test} data
 }
 \description{
 This functions reproduces in some way the results achieved in the
-in the Kaggle competition so far. In doing so function performs based on the 
+in the Kaggle competition so far. In doing so the function performs based on the 
 arguments a random forest to predict the test data.
 }
 \examples{
