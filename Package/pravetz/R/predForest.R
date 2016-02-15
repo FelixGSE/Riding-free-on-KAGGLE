@@ -29,7 +29,6 @@
 #' featuresTE <- matrix( rnorm(size,0,10), nrow = 100, ncol = 3 )
 #' test       <- as.data.frame(cbind( 1:100, featuresTE) )
 #' colnames(test)     <- c("id","F1","F2","F3")
-#' predictForest( training = trSet, test =  )
 #' 
 #' # Run function
 #' prediction <- predictForest(training = training, test = test, nt = 10)
