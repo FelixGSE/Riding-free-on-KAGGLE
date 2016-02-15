@@ -28,9 +28,21 @@ arguments a random forest model to predict the test data.
 }
 \examples{
 # Create a simple training data set similiar to the competition set
-N  <- 10
-M  <- 10
-# Transform to quantile matrix
+size     <- 300
+
+Create test data set
+features <- matrix( rnorm(size,0,10), nrow = 100, ncol = 3 )
+response <- sample( size , 5 , replace = FALSE )
+training <- data.frame( features , res )
+colnames(training) <- c("F1","F2","F3","popularity")
+
+# Create test data set
+featuresTE <- matrix( rnorm(size,0,10), nrow = 100, ncol = 3 )
+test       <- as.data.frame(cbind( 1:100, featuresTE) )
+colnames(test)     <- c("id","F1","F2","F3")
 predictForest( training = trSet, test =  )
+
+# Run function
+prediction <- predictForest(training = training, test = test, nt = 10)
 }
 

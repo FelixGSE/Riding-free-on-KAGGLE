@@ -16,10 +16,22 @@
 #' @export
 #' @examples
 #' # Create a simple training data set similiar to the competition set
-#' N  <- 10
-#' M  <- 10
-#' # Transform to quantile matrix
+#' size     <- 300
+#'
+#' Create test data set
+#' features <- matrix( rnorm(size,0,10), nrow = 100, ncol = 3 )
+#' response <- sample( size , 5 , replace = FALSE )
+#' training <- data.frame( features , res )
+#' colnames(training) <- c("F1","F2","F3","popularity")
+#'
+#' # Create test data set
+#' featuresTE <- matrix( rnorm(size,0,10), nrow = 100, ncol = 3 )
+#' test       <- as.data.frame(cbind( 1:100, featuresTE) )
+#' colnames(test)     <- c("id","F1","F2","F3")
 #' predictForest( training = trSet, test =  )
+#' 
+#' # Run function
+#' prediction <- predictForest(training = training, test = test, nt = 10)
 
 # ----------------------------------------------------------------------
 #  Begin code 
@@ -27,12 +39,19 @@
 
 predictForest <- function( training = NULL , Nresponse = "popularity", test = NULL, 
 						     drops = c("id","url"), nt = 1000 )
-
 {
 
 ################################################################################
 # Check input for correct format
+################################################################################1
+
+# Load or install random forest if necessary
+if (!require("randomForest")) install.packages("randomForest"); library(randomForest)
+
 ################################################################################
+# Check input for correct format
+################################################################################
+
 # Check for correct format of training
 if( is.data.frame(training) == FALSE ){
 stop("Error: training must be an object of class data frame")
@@ -50,13 +69,16 @@ if( ncol(test) == 0 | nrow(test) == 0 ){
 stop("Error: The argument test can't be empty")
 } 
 # Convert response variable if necessary and check if empty
+
+if( Nresponse %in% names(training) == FALSE  ){ 
+stop("Error: No correct response specified") } 
+
 response <- training[,Nresponse]
-n 		 <- length(response)
-if( n == 0  ){ 
-stop("Error: No response specified")
+
 } else if ( is.factor( response ) == FALSE ) { 
 response <- as.factor( response )
 }
+
 ################################################################################
 # Run prediction
 ################################################################################
@@ -77,14 +99,14 @@ pred <- as.numeric(pred)
 # Design final output
 ################################################################################
 
-# Look up test id
-idTest <- test[,"id"]
 # Check if id is existing
-if( length(idTest) == 0){
+if( "id" %in% names(test) == FALSE ){
 # Compute placeholder id in case there is no adequate id in test set
 idTest <- 1:nrow(test)
 # Print corresponding warning
 warning("No proper id found in test data set")
+} else { 
+idTest <- test[,"id"]
 }
 
 # Combine output
