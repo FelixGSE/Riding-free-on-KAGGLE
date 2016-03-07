@@ -2,7 +2,7 @@
 
 ###################################################################################
 
-# Authors:      Denitsa Panova, Felix Gutmann, Thomas Vincente
+# Authors:      Denitsa Panova, Felix Gutmann, Thomas Vicente
 # Programm:     Barcelona graduate school of economics - M.S. Data Science 
 # Course:       15D012 - Advanced Computational Methods 
 # Type:         Classification competition
