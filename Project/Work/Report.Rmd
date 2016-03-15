@@ -1,0 +1,12 @@
+---
+title: "Report"
+author: "Denitsa Panova, Felix Gutmann, Thomas Vicente"
+date: "March 13, 2016"
+output: html_document
+---
+
+# Algorithms we have considered (Accuracies)
+
+# (Choosing the parameters) - tuning
+ 
+# Why did we chose one method over another
