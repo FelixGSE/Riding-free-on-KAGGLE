@@ -4,6 +4,7 @@ author: "Denitsa Panova, Felix Gutmann, Thomas Vicente"
 date: "March 16, 2016"
 output: html_document
 ---
+# The things which are in bold are either wrongly spelled or i think that they sound better in the way I have proposed
 
 # 2 Review of Models and Predictions
 Table 1 **(in your file it is not directing me to the table)** gives a broad overview of all the applied methods with the corresponding results on the **leader board** and on cross validation (if **it is** available). As **it is shown** we tried **a vast** amount of **machine learning techniques**. In order to be concise**,** we **briefly outline** some basic **approaches** and **we describe in detail** the **approach** that worked best for us (both in **terms of** performance and applicability).  
