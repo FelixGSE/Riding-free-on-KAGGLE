@@ -1,10 +1,12 @@
 ---
-title: "Report"
-author: "Denitsa Panova, Felix Gutmann, Thomas Vicente"
+title: "Kaggle Competiotion Report"
+author: " The Free Riders: Denitsa Panova, Felix Gutmann, Thomas Vicente"
 date: "March 16, 2016"
 output: html_document
 ---
 
 # Introducion
 
-Our goal is to predict the popularity of an online news articles. The level of popularity is (from 1 to 5, where 1 is the least popular and 5 the most) is based on number times the particular article has beenn shared. The whole data set is divided into two - training and testing. From now on we will refer to them as the training and the test. In order to predict popularity classes we utilize different algorithms.  
+This is a report describing the results and approaches undertaken by the Free Riders team for the Kaaggle competion for Advanced Computational Methods and Machine Learning classes in Barcelona Graduate School of Economics, Spain.  
+The project goal is to predict the popularity of an online news articles. All articles are taken from the website mashable.com. Popularity classes are in the range from 1 to 5, where 1 is the least popular and 5 the most. The separtion is based on the number of times a particular article has been shared, the popularity indicator we use. The whole data set is divided into two parts - training (30 000 obsrevations) and testing (9 644 obsrevations). From now on we refer to them as the training and the test. In order to predict popularity classes we utilize machine learning techniques. We implement  **number** algorithms, ranging from a single model type ( like Random forest) to multiple models, for example the ensemble technique. A more detailed discussion regarding all aproaches can be found in the second part of the report - Predictions.  
+The data set, acquired and preprocessed by K. Fernandes et al. has 59 extracted features (excluding popularity)
