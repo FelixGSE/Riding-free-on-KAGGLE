@@ -1,4 +1,4 @@
-library(readr) ; library(h2oEnsemble) ; library(extraTrees) ; library(xgboost) ; library(glmnet) ; library(dummies) 
+library(readr) ; library(h2oEnsemble) ; library(extraTrees) ; library(xgboost)
 setwd('/Users/Thomas/Dropbox/DS_GROUP/15D012 - Advanced Computational Methods/Data')
 
 h2o.init(nthreads = -1, max_mem_size = "12g")
@@ -32,14 +32,14 @@ wProba <- function(fit) {
 
 probas <- data.frame()
 
-sample_rates <- c(.65, .75, .85)
-ntrees <- seq(5,30,1)
-nbins <- c(20,30,40,50,60)
-maxdepth <- seq(1,9,1)
-mtries <- c(3,4,5,6,7,8)
-learn_rate <- seq(.1,.7,.01)
+sample_rates <- seq(.5,.8,.05)
+ntrees <- seq(40,400)
+nbins <- seq(5,60)
+maxdepth <- seq(5,15)
+mtries <- seq(5,10)
+learn_rate <- seq(.01,.7,.01)
 
-for (i in 1:25) {
+for (i in 1:50) {
 	cvSets()
 	forest <- h2o.randomForest(x, y, training_frame=train, ntrees = sample(ntrees, 1), sample_rate = sample(sample_rates, 1), nbins=sample(nbins, 1), mtries=sample(mtries, 1), max_depth=sample(maxdepth, 1))
 	wProba(forest)
@@ -48,8 +48,8 @@ for (i in 1:25) {
 	gbm <- h2o.gbm(x, y, training_frame=train, ntrees = sample(ntrees, 1), nbins=sample(nbins, 1), max_depth=sample(maxdepth, 1), learn_rate=sample(learn_rate, 1))
 	wProba(gbm)
 
-	cvSets() ; layer <- sample(seq(20,100,5),1)
-	deep <- h2o.deeplearning(x, y, training_frame=train, hidden = c(layer,layer,layer,layer), activation=(sample(c("Rectifier", "Tanh", "TanhWithDropout","RectifierWithDropout", "Maxout", "MaxoutWithDropout"),1)), epochs=sample(seq(5,30,5),1))
+	cvSets() ; layer <- sample(seq(40,200),1)
+	deep <- h2o.deeplearning(x, y, training_frame=train, hidden = c(layer,layer,layer,layer), activation=(sample(c("Rectifier", "Tanh", "TanhWithDropout","RectifierWithDropout", "Maxout", "MaxoutWithDropout"),1)), epochs=sample(seq(5,60,5),1))
 	wProba(deep)
 
 	#cvSets()
@@ -61,7 +61,7 @@ for (i in 1:25) {
 
 	cvSets()
 	X <- train1[,-60] ; y0 <- as.factor(train1[,60]) 
-	xtra <- extraTrees(X, y0, ntree=sample(seq(5,20,1),1), mtry=sample(seq(3,8,1),1), numThreads=4, numRandomCuts=sample(seq(1,3,1),1), evenCuts=T)
+	xtra <- extraTrees(X, y0, ntree=sample(seq(5,200,1),1), mtry=sample(seq(3,12,1),1), numThreads=4, numRandomCuts=sample(seq(1,3,1),1), evenCuts=T)
 	pred <- data.frame(predict(xtra, test0, probability=T))
 	p <- cbind(seq(1,nrow(pred),1), pred) ; colnames(p) <- c('seq(1, nrow(pred), 1)', 'p1', 'p2', 'p3')
 	probas <<- rbind(probas, p)
@@ -73,7 +73,7 @@ for (i in 1:25) {
 	              "num_class" = 4,    # number of classes 
 	              "eval_metric" = "merror",    # evaluation metric 
 	              "nthread" = 4,   # number of threads to be used 
-	              "max_depth" = sample(seq(3,6),1),    # maximum depth of tree 
+	              "max_depth" = sample(seq(3,12),1),    # maximum depth of tree 
 	              "eta" = sample(seq(.01,.6,.001),1),    # step size shrinkage 
 	              "gamma" = sample(seq(.001,2,.001),1),    # minimum loss reduction 
 	              #"subsample" = .05,    # part of data instances to grow tree 
@@ -81,7 +81,7 @@ for (i in 1:25) {
 	              "lambda"=sample(c(1,2),1)
 	              #"min_child_weight" = 1  # minimum sum of instance weight needed in a child 
 	              )
-	bst <- xgboost(param=param, data=dtrain, nrounds=sample(seq(10,70,1),1), prediction=T)
+	bst <- xgboost(param=param, data=dtrain, nrounds=sample(seq(40,300,1),1), prediction=T)
 	pred <- matrix(predict(bst, as.matrix(test0)), ncol = 4, byrow = T)[,-1]
 	p <- cbind(seq(1,nrow(pred),1), pred) ; colnames(p) <- c('seq(1, nrow(pred), 1)', 'p1', 'p2', 'p3')
 	probas <<- rbind(probas, p)
@@ -92,6 +92,8 @@ for (i in 1:25) {
 	prediction <<- as.matrix(apply(probs[, (1:3)], 1, function(x) which(x == max(x))))
 
 	print(i)
+
+	Sys.sleep(30)
 }
 
 id <- read.csv('news_popularity_test.csv')$id
@@ -101,8 +103,8 @@ head(submit)
 
 submit <- data.frame(id = submit[,1], popularity = submit[,2])
 
-write.csv(submit, '/Users/Thomas/Dropbox/DS_GROUP/15D012 - Advanced Computational Methods/Work/Output/OutputData/Thomas/manualEnsembleMany0703.csv', row.names=F)
+write.csv(submit, '/Users/Thomas/Dropbox/DS_GROUP/15D012 - Advanced Computational Methods/Work/Output/OutputData/Thomas/manualEnsembleMany0903.csv', row.names=F)
 
 #REGRESS OVER PROBA VECTOR
 
-write.csv(probas, '/Users/Thomas/Dropbox/DS_GROUP/15D012 - Advanced Computational Methods/Work/Output/OutputData/Thomas/probas0703.csv', row.names=F)
+write.csv(probas, '/Users/Thomas/Dropbox/DS_GROUP/15D012 - Advanced Computational Methods/Work/Output/OutputData/Thomas/probas0903.csv', row.names=F)

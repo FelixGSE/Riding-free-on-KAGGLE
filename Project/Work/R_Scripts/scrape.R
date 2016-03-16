@@ -3,9 +3,6 @@ setwd('/Users/Thomas/Dropbox/DS_GROUP/15D012 - Advanced Computational Methods/Da
 trainURLs <- as.character(read.csv('news_popularity_training.csv')$url)
 testURLs <- as.character(read.csv('news_popularity_test.csv')$url)
 
-dim(read.csv('news_popularity_training.csv'))
-
-
 URLs <- c(trainURLs, testURLs) ; n <- length(URLs)
 
 publish <- as.Date(substr(URLs,21,30), "%Y/%m/%d")
