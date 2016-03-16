@@ -1,0 +1,30 @@
+---
+title: "second part of the report"
+author: "Denitsa Panova, Felix Gutmann, Thomas Vicente"
+date: "March 16, 2016"
+output: html_document
+---
+
+# 2 Review of Models and Predictions
+Table 1 **(in your file it is not directing me to the table)** gives a broad overview of all the applied methods with the corresponding results on the **leader board** and on cross validation (if **it is** available). As **it is shown** we tried **a vast** amount of **machine learning techniques**. In order to be concise**,** we **briefly outline** some basic **approaches** and **we describe in detail** the **approach** that worked best for us (both in **terms of** performance and applicability).  
+
+#2.1 Basic ”off the shelf” approaches and benchmark
+One of the first models**,** we applied**,** were penalized (**multinomial**- ) GLM’s using Ridge, Lasso and Elastic Net regularization **(it would be nice if you can provide the url for the code for each of those things, something like I have done in the introduction)**. This should give **us** another internal benchmarks for further procedure. **(i don't understand what you mean here)** It turned out that **on their own the** three didn’t perform well (leader board performance ≈ 0.50).1 (Hmmmmmm)  
+**Another method which we utilize is** SVM’s, a **widely** used method. The e1071 package provides a flexible setting for SVM’s **regarding** tuning **the algorithm**. It provides several kernel types**,** classification methods (c and nu) **(some kind of greek letters??)** and arguments for class **imbalance**. **Additionally** a grid search was **performed** to tune both C (cost for **misclassification**) and gamma (**the** margin). However, we stopped **the optimization** (**a** grid search with only two parameters for each argument) **approximately after** 10 hours without a result . A submission, **using a** radial kernel and **a** basic **configuration,** obtained a score of 0.506 on the leader board. Mainly due to **lack** of speed, **and** tuning expenses,  SVM wasn’t considered anymore **as a relevant alternative**.  
+The best ”off the shelf” **method** turned out to be random forest and boosting. Random
+forest performed **extremely** well. Due to the **computational intensity the model** is very easy to tune. Table 1 **shows** some of the results for random forest **with** different settings. **In** the end it turned out that the overall second best **performing algorithm** was based **as well** on random forest. We found this result quite early in the process. Based on the **intermediate evaluation (the private leader board)** this was adapted **as a** benchmark model.  
+
+#2.2 **Manual** ensemble approach.
+We briefly describe our **by** far most promising approach. Instead of running isolated
+models, we used different **technique** and averaged **the prediction** results.  
+The first **attempt** in that direction uses the superLearner package of R, which allows to **combine** several model types. Furthermore, **the package** provides internal cross validation **option, as well as parallelized ** implementation for some models. **This approach** increases performance. Since it doesn’t support multiple classification, we transformed the outcome variable to a binary matrix and trained a full model using a **mixture** of **GBM**,random forest and **Lasso GLM. In spite** of the rather good **performance** on the leader board (0.543
+), it couldn’t beat the best random forest specification **we had.** **Even though we parallelize,** there is still a **computing time** issue. A full training of the model and prediction lasts **approximately** six hours.  
+We wanted to exploit this more diverse **(why diverse?)** prediction power, regarding both model **specification and computational intensity** . **Therefore,** we use the H20 package, which provides an optimized performance of several different models. Furthermore, the supported methods are also **parallelized**, which **speeds our algorithm additionally.** Concerning the data, we **dropped** the minority classes 4 and 5 **in order to give the models the opportunity to focus** more on the core classes. **Moreover,** we **omitted** observations, which, in
+**our** opinion, where questionable (as discussed in the introduction). In this setting we applied the following models for **our** ensembling:  
+**Having to optimize** such **an** extensive number of models, a grid search didn’t seem to be
+**able to do it** in reasonable amount of time. Therefore, we re-run all models several times and randomly choose parameters out of **the parameters'** range. To monitor our **performance,** **in each iteration** we randomly subset **(roughly 66%)** of the training as a input data set and use the other part as a test **in order** to validate our models. This procedure turned out to be a solid working basis, because results could be produced fast within **approximately** less than an hour. Instead of directly predicting classes**,** we **converted** the probabilities**, produced by each model, into** classes. Since we **averaged** over all predictions **and over** each model, we believe this provides a more granular **results.** This procedure gave us the best result on the public leaderboard with an accuracy of 0.557. Experience with stacking   
+
+#Conclusion and possible improvements
+So far we saw that the best **approach was** the manual ensemble approach. Despite the fact
+it performed quite good, it also seem to have an ”upper bound”. Concerning the model setting**,** the only thing would probably **can** be **included is** SVM’s using randomized parameter search. So far in our opinion the only thing that can be done to increase the prediction performance is **to** construct new features, which **can** add more predictive power.  
+**NOTE: can we have the table in horizontal position? And it would be nice if we include links to the r script files, like I did in the introduction part**
