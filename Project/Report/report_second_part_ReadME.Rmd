@@ -14,7 +14,7 @@ One of the first models**,** we applied**,** were penalized (**multinomial**- ) 
 The best ”off the shelf” **method** turned out to be random forest and boosting. Random
 forest performed **extremely** well. Due to the **computational intensity the model** is very easy to tune. Table 1 **shows** some of the results for random forest **with** different settings. **In** the end it turned out that the overall second best **performing algorithm** was based **as well** on random forest. We found this result quite early in the process. Based on the **intermediate evaluation (the private leader board)** this was adapted **as a** benchmark model.  
 
-#2.2 **Manual** ensemble approach.
+#2.2 **Manual** (it is not seen but u have mistake in manual) ensemble approach.
 We briefly describe our **by** far most promising approach. Instead of running isolated
 models, we used different **technique** and averaged **the prediction** results.  
 The first **attempt** in that direction uses the superLearner package of R, which allows to **combine** several model types. Furthermore, **the package** provides internal cross validation **option, as well as parallelized ** implementation for some models. **This approach** increases performance. Since it doesn’t support multiple classification, we transformed the outcome variable to a binary matrix and trained a full model using a **mixture** of **GBM**,random forest and **Lasso GLM. In spite** of the rather good **performance** on the leader board (0.543
