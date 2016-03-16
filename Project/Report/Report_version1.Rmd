@@ -1,0 +1,10 @@
+---
+title: "Report"
+author: "Denitsa Panova, Felix Gutmann, Thomas Vicente"
+date: "March 16, 2016"
+output: html_document
+---
+
+# Introducion
+
+Our goal is to predict the popularity of an online news articles. The level of popularity is (from 1 to 5, where 1 is the least popular and 5 the most) is based on number times the particular article has beenn shared. The whole data set is divided into two - training and testing. From now on we will refer to them as the training and the test. In order to predict popularity classes we utilize different algorithms.  
