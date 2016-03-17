@@ -8,7 +8,7 @@ Authors@R: person("Denitsa", "Panova", email = "denitsa.panova@barcelonagse.eu",
 	    person("Thomas", "Vincente", email = "thomas.vincente@barcelonagse.eu", role = c("aut", "cre"))
 Maintainers: Denitsa Panova <denitsa.panova@barcelonagse.eu>
     Felix Gutmann"<felix.gutmann@barcelonagse.eu>
-    Thomas Vincente <thomas.vincente@barcelonagse.eu>
+    Thomas Vicente <thomas.vicente@barcelonagse.eu>
 Description: Replicate predication results from kaggle competition
 Depends: R (>= 2.5.0)
 Imports: randomForest, h2o, extraTrees, xgboost, plyr, C50, assertthat 
