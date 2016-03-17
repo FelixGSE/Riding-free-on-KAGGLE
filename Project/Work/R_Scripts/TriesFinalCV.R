@@ -1,7 +1,15 @@
 CV <- function(data, y, rounds, threads=2, ram='4g') {
 
-	#import data with the same structure as new_popularity_training
-	library(h2oEnsemble) ; library(extraTrees) ; library(xgboost) ; library(plyr) ;library(C50) ; library(assertthat) ; options(warn=-1)
+	#Load required packages
+  if (!require("xgboost")) install.packages("xgboost"); library(xgboost)
+  if (!require("plyr")) install.packages("plyr"); library(plyr)
+  if (!require("C50")) install.packages("C50"); library(C50)
+  if (!require("devtools")) install.packages("devtools"); library(devtools)
+  if (!require("h2oEnsemble")) install_github("h2oai/h2o-2/R/ensemble/h2oEnsemble-package"); library(h2oEnsemble)
+  if (!require("assertthat")) install.packages("assertthat"); library(assertthat)
+  
+  # Supress warnings
+  options(warn=-1)
 
 	#set a local H2O server
 	h2o.init(nthreads = threads, max_mem_size = ram)
