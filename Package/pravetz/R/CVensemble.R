@@ -34,6 +34,9 @@
 #  Begin code 
 # ----------------------------------------------------------------------
 
+
+CVensemble <- function(data, y, rounds, threads=2, ram='4g') {
+
   #Load required packages
   if (!require("xgboost")) install.packages("xgboost"); library(xgboost)
   if (!require("extraTrees")) install.packages("extraTrees"); library(extraTrees)
@@ -42,8 +45,6 @@
   if (!require("devtools")) install.packages("devtools"); library(devtools)
   if (!require("h2oEnsemble")) install_github("h2oai/h2o-2/R/ensemble/h2oEnsemble-package"); library(h2oEnsemble)
   if (!require("assertthat")) install.packages("assertthat"); library(assertthat)
-
-CVensemble <- function(data, y, rounds, threads=2, ram='4g') {
   
   # Supress warnings
   options(warn=-1)
