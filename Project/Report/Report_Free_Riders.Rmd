@@ -46,3 +46,27 @@ We also saw our performance improve when we removed classes 4 and 5 from the tra
 So far we saw that the best approach was the probability blending ensemble approach. Of course, it is much less optimized than the submodels as it is coded on R. We also would have liked to explore more tuning possibilities. Concerning the model choice, we also could probably have tried an implementation of SVM using randomized parameter search. 
 
 In our opinion, the way to increase the performance is in fact by constructing new features. Out attemps in that regard didn't lead to any improvement.
+
+```{r, echo=FALSE,message=FALSE, warning=FALSE}
+if (!require("ggplot2")) install.packages("ggplot2"); 
+library(ggplot2);
+ Algorithms<- c("Super Learner","Ensemble 5 methods", "GBM","Random Forest","SVM","Elastic Net GBM","Ensenble 6 methods","Tuned Ensemble 5 Methods")
+ Public<-c(0.54348,0.55745,0.54193,0.53571,0.49689,0.33075,0.54814,0.54814)
+ Private<-c(0.52689,0.52844,0.52589,0.51756,0.48844, 0.30711,0.53267,0.53322)
+ Private<-round(Private*100,2)
+ Public<-round(Public*100,2)
+ df<-as.data.frame(cbind(Algorithms,Public,Private))
+
+
+library(reshape2) ; library(ggthemes);
+df.m<-melt(df, id.vars='Algorithms');
+ggplot(df.m, aes(Algorithms, value)) +   
+  geom_bar(aes(fill = variable), position = "dodge", stat="identity", alpha=.5)+
+  labs(y="Accuracy", x="")+
+  guides(fill=guide_legend(title="Leaderboards"))+
+  theme_tufte()
+
+
+ 
+
+```
