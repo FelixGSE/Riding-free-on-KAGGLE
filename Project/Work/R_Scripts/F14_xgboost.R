@@ -1,3 +1,7 @@
+#****************************
+#Exploration of Xgboost package
+#****************************
+
 #packages
 install.packages("xgboost")
 library("xgboost")
@@ -12,7 +16,7 @@ test<-test[,-1]
 test<-test[,-1]
 #separate the label colimns
 label<-train[,"popularity"]
-#make it binary 1=1, rest=0
+#make it binary 1=particular class, rest=0
 label1<-rep(0,length(label))
 for (i in 1:length(label1)) {
   if (label[i] == 1){
@@ -51,11 +55,14 @@ cv.nround <- 5
 #the original dataset is randomly partitioned into nfold equal size subsamples.
 cv.nfold <- 100
 
-
+#Try different functions 
 bst.cv = xgb.cv(param=param, data = train, label = label, 
                 nfold = cv.nfold, nrounds = cv.nround)
 nround = 200
+#second trial 
 bst = xgboost(param=param, data = train, label = label, nrounds=nround)
+
+#CV version
 bst.cv <- xgb.cv(param=param, data=train, label=label, 
                  nfold=cv.nfold, nrounds=cv.nround, prediction=TRUE, verbose=FALSE)
 # get CV's prediction decoding
@@ -64,7 +71,6 @@ pred.cv = max.col(pred.cv, "last")
 # confusion matrix
 confusionMatrix(factor(label+1), factor(pred.cv))
 
-
 #prediction class
 pred<-predict(bst, as.matrix(test))
 # decode prediction
@@ -72,7 +78,8 @@ pred = matrix(pred, nrow=numberOfClasses, ncol=length(pred)/numberOfClasses)
 pred = t(pred)
 pred = max.col(pred, "last")
 
-
+#We also look at another approach suggested by the 
+#article which is above 
 #ZeroVariance of the features
 require(caret)
 require(corrplot)
@@ -89,6 +96,7 @@ zero.var
 #it is important that features have maximum variance for maximum uniqueness, so that 
 #each feature is as distant as possible (as orthogonal as possible) from the other features.
 
-#tSNE plot - 2d plot of multi-dim classes
+#Yet, another approach is the plotting of the features 
+#TSNE plot - 2d plot of multi-dim classes
 tsne = Rtsne(as.matrix(train), check_duplicates=FALSE, pca=TRUE, 
              perplexity=30, theta=0.5, dims=2)
