@@ -54,6 +54,10 @@ predictEnsemble <- function(data, y, test, rounds, threads=2, ram='4g') {
   h2o.init(nthreads = threads, max_mem_size = ram)
   
   assert_that(class(data) == 'data.frame' | class(data) == 'matrix')
+  assert_that(y %in% names(data))
+  assert_that(class(test) == 'data.frame' | class(test) == 'matrix')
+  assert_that(is.numeric(rounds))
+  assert_that(is.numeric(threads))
   
   #removing the columns ID and URL
   data <- as.data.frame(data[sample.int(nrow(data)),-c(1,2)])
