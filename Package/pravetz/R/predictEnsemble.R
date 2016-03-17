@@ -43,6 +43,7 @@ predictEnsemble <- function(data, y, test, rounds, threads=2, ram='4g') {
   
   #Load required packages
   if (!require("xgboost")) install.packages("xgboost"); library(xgboost)
+  if (!require("extraTrees")) install.packages("extraTrees"); library(extraTrees)
   if (!require("plyr")) install.packages("plyr"); library(plyr)
   if (!require("C50")) install.packages("C50"); library(C50)
   if (!require("devtools")) install.packages("devtools"); library(devtools)
