@@ -37,7 +37,14 @@
 #  Begin code 
 # ----------------------------------------------------------------------
 
-predictForest <- function( training = NULL , Nresponse = "popularity", 
+iditot<- function(  a){
+  
+  print(x)
+}
+
+
+
+predictForest2 <- function( training = NULL , Nresponse = "popularity", 
                            test = NULL, drops = c("id","url"), nt = 1000 )
 {
 
