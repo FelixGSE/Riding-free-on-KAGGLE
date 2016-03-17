@@ -3,4 +3,4 @@
 export(CVensemble)
 export(predictEnsemble)
 export(predictForest)
-import(h2oEnsemble)
+import(h2o)
