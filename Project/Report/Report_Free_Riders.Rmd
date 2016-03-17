@@ -13,15 +13,13 @@ This competition is about predicting accurately the popularity of Mashable.com's
 
 # Data Exploration
 
-The data, acquired and preprocessed by K. Fernandes et al. is composed of 60 variables. 
+The data, acquired and preprocessed by K. Fernandes et al., is composed of 60 variables. In order to acquire more extensive knowledge of these features, we conduct data exploration. This consists of summarizing not only the data distribution, but also the conditional distribution with respect to the [target variable](https://github.com/FelixGSE/Riding-free-on-KAGGLE/blob/master/Project/Work/R_Scripts/F00_DataInspection.R).  
 
-In order to acquire more extensive knowledge of these features, we conduct data exploration. This consists of summarizing the distribution of the data, and its conditional distribution regarding the categorical [target variable](https://github.com/FelixGSE/Riding-free-on-KAGGLE/blob/master/Project/Work/R_Scripts/F00_DataInspection.R).  
-
-We also tried to identify "ambiguous" data points that would alter our inference negatively. For example, observation 16546 has a "kw_max_avg" value that is considered senseless regarding the rest of the distribution. In fact, many observations were easily detected as they had the same extreme value for some variables. We [store](https://github.com/FelixGSE/Riding-free-on-KAGGLE/blob/master/Project/Data/Raw_Data/outliers_id) the ID of such points into a data set in order to later exclude the problematic observations.  We evaluated our performance when using the full data, and the reduced data. This led us to prefer the second option for most runs.  
+Additionally, we tried to identify "ambiguous" data points that would influence our inference. For example, observation 16546 has a "kw_max_avg" value that is considered senseless regarding the rest of the variable distribution. In fact, many of the "ambiguous" observations were easily detected as they had the same extreme value for some variables. We [store](https://github.com/FelixGSE/Riding-free-on-KAGGLE/blob/master/Project/Data/Raw_Data/outliers_id) the ID's of such points into a data set in order to later exclude the problematic observations.  We evaluated our performance using the full data, and the reduced data. This led us to prefer the second option for most of of the algorithms.  
 
 Also we have noticed that the data set is imbalanced. We used Synthetic Minority Over-sampling Technique to balance the data set by augmenting classes 4 and 5. However, this approach did not increase our prediction power. Therefore, we focused on classifiers which can deal with imbalanced data like Random Forest.  
 
-At the end of our data explortion, we thought about creating new features from the original ones. We notably [scraped](https://github.com/FelixGSE/Riding-free-on-KAGGLE/blob/master/Project/Work/R_Scripts/scrape.R) google news popularity results based on the article's title and the date in the URL feature. This approach unexpectedly only inconsistently improved the Random Forest's accuracy.  
+At the end of our data explortion, we thought about creating new features from the original ones. We [scraped](https://github.com/FelixGSE/Riding-free-on-KAGGLE/blob/master/Project/Work/R_Scripts/scrape.R) google news popularity results based on the article's title and the date in the URL feature. This approach unexpectedly only inconsistently improved the Random Forest's accuracy.  
 
 # Review of Models and Predictions
 FELIXTABLENAME displays the methods used with the corresponding results on the leaderboard, and, when available, on cross validation. Rather than describing all the techniques we tried, we will concentrate on the ones which allowed us to achieve a notable prediction power, and the ones that seemed relevant for our competition.
@@ -30,31 +28,31 @@ FELIXTABLENAME displays the methods used with the corresponding results on the l
 
 We first tried multinomial [GLMs penalized](https://github.com/FelixGSE/Riding-free-on-KAGGLE/blob/master/Project/Work/R_Scripts/F11_PenalizedGLM_v01.R) model with Ridge, Lasso and Elastic Net. They performed rather poorly, achieving around 50% on the leaderboard. But we used them as benchmarks for the future methods. 
 
-We then tried the [e1071](https://github.com/FelixGSE/Riding-free-on-KAGGLE/blob/master/Project/Work/R_Scripts/F12_SVM.R) package that provided a very tunable implementation of Support Vector Machines, notably in terms of kernel types, classification methods (c and nu) and arguments for class imbalance. Additionally a grid search was performed to tune both the weights on the misclassification costs and the margin. However, we stopped this procedure after about 10 hours of running. A submission, using a radial kernel and a basic configuration, obtained a score of 0.506. Mainly due to its expensiveness, SVM wasn’t considered anymore as a relevant alternative.
+We then tried the [e1071](https://github.com/FelixGSE/Riding-free-on-KAGGLE/blob/master/Project/Work/R_Scripts/F12_SVM.R) package that provided a very tunable implementation of Support Vector Machines, notably in terms of kernel types, classification methods (c and nu) and arguments for class imbalance. Additionally, a grid search was performed to tune both the weights on the misclassification costs and the margin. However, we stopped this procedure after about 10 hours of running. Also we made a submission, using a radial kernel and a basic configuration. It obtained a score of 0.506. Mainly due to its expensiveness, SVM wasn’t considered anymore as a relevant alternative.
 
-The best ”off the shelf” methods turned out to be random forest and boosting. Since random forests are fast, they are realtively easy to tune. FELIXTABLENAME shows some of the results for random forest applying different settings. Based on the private-leader-board interim result, this would be used as the new benchmark model. 
+The best ”off the shelf” methods turned out to be random forest and boosting. Since random forests are fast, they are relatively easy to tune. FELIXTABLENAME shows some of the results for random forest applying different settings.Based on the private-leader-board result of the interim model, it would be used as the new benchmark.
 
 ## Ensemble of Methods Approach
 
-Instead of running isolated models, we considered ensemble learning. This machine learning technique consists of letting different 'strong' learners 'voting' for a particular class. We expect such 'generalizer' method to have smaller variance than the variance of every submodel separately, which increases the predictive power.
+Instead of running isolated models, we considered ensemble learning. This machine learning technique consists of letting different 'strong' learners 'voting' for a particular class. We expect such 'generalizer' method to have smaller variance than the variance of every submodel separately, which would increase the predictive power.
 
 ###SuperLearner
 
-The first variant of this approach uses the [superLearner](https://github.com/FelixGSE/Riding-free-on-KAGGLE/blob/master/Project/Work/R_Scripts/F15_SuperLearner.r) package. It allows to combine several submodel class predictions within a meta-learner algorithm. The meta learner, thanks to its proper mechanisms, selects the relevant predictions to finally output their best combination. Furthermore, the package provides an internal cross validation option, as well as a parallelized implementation for some models. However, since it doesn’t support multiple classification, we had to transform the outcome variable to a binary matrix and train the model using a mixture of GBM, random forest and Lasso GLM. 
+The first variant of the ensemble approach uses the [superLearner](https://github.com/FelixGSE/Riding-free-on-KAGGLE/blob/master/Project/Work/R_Scripts/F15_SuperLearner.r) package. It allows to combine several submodel class predictions within a meta-learner algorithm. Thanks to its proper mechanisms, the meta learner selects the relevant predictions in order to output finally their best combination. Furthermore, the package provides an internal cross validation option, as well as a parallelized implementation for some models. However, since it doesn’t support multiple classification, we had to transform the target variable to a binary matrix and train the model using a mixture of GBM, random forest and Lasso GLM. 
 
 This approach yielded an accuracy of 54.3% which is relatively good, but lower than our best random forest. Also, a full training of the model and prediction lasts approximately six hours.  
 
-###'Home made' ensemble
+###'Home-Made' Ensemble
 
-We still strongly believed that ensembling could improve our accuracy and tried another ensemble method, well tailored for our data. The main difference is that we take the mean of the predicted probabilities (to belong to a particular class) of all the methods in the ensemble; we believe this is a better way than averaging over the raw predictions. The models are run into a loop. In order to uncorrelate the models and introduce randomness, we train them on varying size random subsamples. Also, at each iteration, the models' parameters are randomly set, within a reasonable range of values according to multiple trials. 
+We still strongly believed that ensembling could improve our accuracy and therefore, we tried another well tailored for our data ensemble method. The main difference is that we take the mean of the predicted probabilities (of belonging to a particular class) of all the methods in the ensemble; we believe this is a better way than averaging over the raw predictions. The models are run into a loop. In order to uncorrelate the models and introduce randomness, we train them on varying size random subsamples. Also, at each iteration, the models' parameters are randomly set, within a reasonable range of values according to multiple trials. 
 
-The submodels in question are H2O's implementation of [random forest, gradient boosting machine, and deep learning.](https://github.com/FelixGSE/Riding-free-on-KAGGLE/blob/master/Project/Work/R_Scripts/TriesFinalCV.R). These were chosen because of the parallelized computing option and tuning possibilities. We also included extremely randomized trees, xgboost, and the ensemble rule C5 algorithm. They were run in loops of up to 40 iterations (so 240 models in total), which takes a reasonable 2 hours running time. It is also possible to observe the up-to-date accuracy after each new model.
+The submodels in question are H2O's implementation of [random forest, gradient boosting machine, and deep learning.](https://github.com/FelixGSE/Riding-free-on-KAGGLE/blob/master/Project/Work/R_Scripts/TriesFinalCV.R). These were chosen because of the parallelized computing option and the tuning possibilities. We also included extremely randomized trees, xgboost, and the ensemble rule C5 algorithm. They were run in loops of up to 40 iterations (so 240 models in total), which takes a reasonable 2 hours running time. It is also possible to observe the up-to-date accuracy after each new model.
 
 We also saw our performance improve when we removed classes 4 and 5 from the training sample. At best, this procedure gave us an accuracy of 55.7% on the public leaderboard, 53.32% on the public leader board (we indeed selected our second best), and 54% on cross-validation.
 
 # Conclusion and possible improvements
 
-So far we saw that the best approach was the probability blending ensemble approach. Of course, it is much less optimized than for instance the submodels as it is coded on R, but it has to built-in alternative for multi-class classifcation. In the end, we would have liked to explore more tuning possibilities. 
+So far we saw that the best approach was the probability blending ensemble approach. Of course, it is much less optimized than, for instance, the submodels as it is coded on R, but it has to built-in alternative for multi-class classifcation. In the end, we would have liked to explore more tuning possibilities. 
 
 Around the end of the competition we tried Poisson distribution based models. We thought it would be benificial to take into account the order of the target variable. Such models did not improve our performance, even in the ensemble.
 
@@ -66,7 +64,7 @@ In our opinion, the way to increase the performance is in fact by constructing n
 
 ###FELIXTABLENAME
 
-###Accuracy on the leaderboard
+###Accuracy on The Leaderboard
 ```{r, echo=FALSE,message=FALSE, warning=FALSE, fig.align='center'}
 if (!require("ggplot2")) install.packages("ggplot2"); 
 library(ggplot2);
