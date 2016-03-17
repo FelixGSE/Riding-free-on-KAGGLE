@@ -52,7 +52,7 @@ We also saw our performance improve when we removed classes 4 and 5 from the tra
 
 # Conclusion and possible improvements
 
-So far we saw that the best approach was the probability blending ensemble approach. Of course, it is much less optimized than, for instance, the submodels as it is coded on R, but it has to built-in alternative for multi-class classifcation. In the end, we would have liked to explore more tuning possibilities. 
+So far we saw that the best approach was the probability blending ensemble approach. Of course, it is much less optimized than, for instance, the submodels, but to its credit it has no built-in alternative for multi-class classifcation.
 
 Around the end of the competition we tried Poisson distribution based models. We thought it would be benificial to take into account the order of the target variable. Such models did not improve our performance, even in the ensemble.
 
