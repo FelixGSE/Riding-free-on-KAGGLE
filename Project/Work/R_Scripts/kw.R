@@ -1,24 +1,30 @@
+#***********************************************
+#Exploration of KW variables 
+#***********************************************
+
 setwd("/home/didi/BGSE/semester2/adcomp/Kaggle")
 library(ggplot2)
 #data with ids
 data <- read.csv('news_popularity_training.csv',header=TRUE,sep=',')
 y <- data[,"popularity"]; 
 x <- data[,-ncol(data)]; 
-x <- x[,-2]; 
-x <- x[,-2];
+x <- x[,-2]; #removing the url 
+x <- x[,-2]; #removing the delta
 
+#Explore the correltion between unique_tokens and kw 
 qplot(data$n_unique_tokens, data=data, geom="density", fill=factor(, alpha=I(.5), 
       main="kw_min_min", xlab="kw_min_min", 
       ylab="Density")
 
-#keywords 
+# create new variable for keywords 
 kw<-x[,seq(19,27)]
+#new df for the kw and y
 new<-cbind(kw,y)
 #target<-seq(0,nrow(new))
-
+#separate only class 1= 1 and rest =0
 dummy <- as.numeric(y>2)
 new<-cbind(new,dummy)
-
+#Investigate again using plot
 qplot(new[,1], data=new, geom="density", fill=factor(new[,ncol(new)]), alpha=I(.5), 
       main="kw_min_min", xlab="kw_min_min", 
       ylab="Density")
@@ -28,7 +34,7 @@ qplot(new[,5], data=new, geom="density", fill=factor(new[,ncol(new)]), alpha=I(.
       ylab="Density")
 #NOTE: kw_max_max more shares in 1,2 pop than in 4,3,5!!!!
 
-# Density plot
+# Density plots
 
 qplot(new[,c(2)], data=new, geom="density", fill=factor(new[,ncol(new)]), alpha=I(.5), 
       main="kw_max_min", xlab="max_max_min", 
