@@ -2,10 +2,16 @@
 
 The data set, acquired and preprocessed by K. Fernandes et al. has 59 features.  
 
-In order to acquire more extensive knowledge of the provided data set, we conduct data exploration. This consists of summarizing the distribution of the data, and its conditional distribution regarding the categorical target variable (https://github.com/FelixGSE/Riding-free-on-KAGGLE/blob/master/Project/Work/R_Scripts/F00_DataInspection.R). 
+In order to acquire more extensive knowledge of the provided data set, we conduct data exploration. 
+This consists of summarizing the distribution of the data, and its conditional distribution 
+regarding the categorical target [variable](https://github.com/FelixGSE/Riding-free-on-KAGGLE/blob/master/Project/Work/R_Scripts/F00_DataInspection.R). 
 
-We also tried to identify "ambiguous" data points that would alter our inference negatively. For example, observation 16546, has a "kw_max_avg" value that is considered senseless regarding the rest of the distribution. In fact, many observations were easily detected because they had the same extreme value for some variables. We [store](https://github.com/FelixGSE/Riding-free-on-KAGGLE/blob/master/Project/Data/Raw_Data/outliers_id) the ID of such points, into a data set in order to later exclude the problematic observations.  We evaluated our performance when using the full data, and the reduced data. This led us to prefer the second option for most runs.
+We also tried to identify "ambiguous" data points that would alter our inference negatively. For example, observation 16546, 
+has a "kw_max_avg" value that is considered senseless regarding the rest of the distribution. 
+In fact, many observations were easily detected because they had the same extreme value for some variables. We [store](https://github.com/FelixGSE/Riding-free-on-KAGGLE/blob/master/Project/Data/Raw_Data/outliers_id) the ID of such points, into a data set in order to later exclude the problematic observations.  We evaluated our performance when using the full data, and the reduced data. This led us to prefer the second option for most runs.
 
-Also we have noticed that the data set is imbalanced. Initially we used Synthetic Minority Over-sampling Technique to balance the data set by augmenting classes 4 and 5. However, this approach did not increase our prediction power. Therefore, we focused on classifiers which can deal with imbalanced data like Random Forest.  
+Also we have noticed that the data set is imbalanced. Initially we used Synthetic Minority Over-sampling Technique to balance the data set by augmenting classes 4 and 5.
+However, this approach did not increase our prediction power. Therefore, we focused on classifiers which can deal with imbalanced data like Random Forest.  
 
-At the end of our data explortion, we thought about creating new features from the original ones. We notably scraped google news popularity results based on the URL feature. From it we took the article's title and the date. This approach unexpectedly only inconsistently improved the Random Forest accuracy.  
+At the end of our data explortion, we thought about creating new features from the original ones. We notably scraped google news popularity results based on the URL feature. From it we took the article's title and the date. 
+This approach unexpectedly only inconsistently improved the Random Forest accuracy.  
