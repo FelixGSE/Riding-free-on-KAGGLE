@@ -1,5 +1,5 @@
 ---
-title: "Report on the kaggle competition"
+title: "Report on the Kaggle competition"
 author: "The Free Riders"
 date: "17 March 2016"
 output: pdf_document
