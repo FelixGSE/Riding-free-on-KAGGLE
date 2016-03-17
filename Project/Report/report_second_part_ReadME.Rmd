@@ -7,12 +7,12 @@ output: html_document
 # The things which are in bold are either wrongly spelled or i think that they sound better in the way I have proposed
 
 # 2 Review of Models and Predictions
-Table 1 **(in your file it is not directing me to the table)** displays the methods used with the corresponding results on the **leader board**, and, when available, on cross validation. Rather than describing all the techniques we tried, we will concentrate on the ones which allowed us to achieve a particular milestone, and others that seemed relevant for our competition.  
+Table 1 **(in your file it is not directing me to the table)** displays the methods used with the corresponding results on the leader board, and, when available, on cross validation. Rather than describing all the techniques we tried, we will concentrate on the ones which allowed us to achieve a notable prediction power, and others that seemed relevant for our competition.  
 
-#2.1 One method approach
-We first tried multinomial GLMs penalized with Ridge, Lasso and Elastic Net. The performed rather poorly, achieving around 50% on the leaderboard. But we used them as benchmarks for future methods. 
+#2.1 Single method approach
+We first tried multinomial GLMs penalized model with Ridge, Lasso and Elastic Net. The performed rather poorly, achieving around 50% on the leaderboard. But we used them as benchmarks for future methods. 
 
-We then tried the e1071 package that provided a very tunable implementation of Support Vector Machines, notably several kernel types, classification methods (c and nu) and arguments for class **imbalance**. Additionally a grid search was performed to tune both the weights on the misclassification costs and the margin. However, we stopped this procedure after about 10 hours of run. A submission, using a radial kernel and a basic configuration, obtained a score of 0.506. Mainly due to its expensiveness, SVM wasn’t considered anymore as a relevant alternative.
+We then tried the e1071 package that provided a very tunable implementation of Support Vector Machines, notably several kernel types, classification methods (c and nu) and arguments for class imbalance. Additionally a grid search was performed to tune both the weights on the misclassification costs and the margin. However, we stopped this procedure after about 10 hours of run. A submission, using a radial kernel and a basic configuration, obtained a score of 0.506. Mainly due to its expensiveness, SVM wasn’t considered anymore as a relevant alternative.
 
 The best ”off the shelf” methods turned out to be random forest and boosting. Notably, due to random forests' computational intensity, they are realtively easy to tune. Table 1 shows some of the results for random forest with different settings. Based on the result on the private leader board, this became the new benchmark model.  
 
