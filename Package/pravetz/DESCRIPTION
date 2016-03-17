@@ -11,7 +11,7 @@ Maintainers: Denitsa Panova <denitsa.panova@barcelonagse.eu>
     Thomas Vincente <thomas.vincente@barcelonagse.eu>
 Description: Replicate predication results from kaggle competition
 Depends: R (>= 2.5.0)
-Imports: randomForest
+Imports: randomForest, h2oEnsemble, extraTrees, xgboost, plyr, C50, assertthat 
 Suggests:randomForest
 License: see LICENCE
 LazyData: true
