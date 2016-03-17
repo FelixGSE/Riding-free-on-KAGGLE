@@ -66,22 +66,20 @@ In our opinion, the way to increase the performance is in fact by constructing n
 
 ###Accuracy on The Leaderboard
 ```{r, echo=FALSE,message=FALSE, warning=FALSE, fig.align='center'}
-if (!require("ggplot2")) install.packages("ggplot2"); 
-library(ggplot2);
- Algorithms<- c("Super Learner","Ensemble 5 methods", "GBM","Random Forest","SVM","Elastic Net GBM","Ensenble 6 methods","Tuned Ensemble 5 Methods")
- Public<-c(0.54348,0.55745,0.54193,0.53571,0.49689,0.33075,0.54814,0.54814)
- Private<-c(0.52689,0.52844,0.52589,0.51756,0.48844, 0.30711,0.53267,0.53322)
- Private<-round(Private*100,2)
- Public<-round(Public*100,2)
- df<-as.data.frame(cbind(Algorithms,Public,Private))
+Algorithms<- c("Super Learner","Ensemble 5 methods", "GBM","Random Forest","SVM","Elastic Net GBM","Ensenble 6 methods","Tuned Ensemble 5 Methods")
+Public<-c(0.54348,0.55745,0.54193,0.53571,0.49689,0.33075,0.54814,0.54814)
+Private<-c(0.52689,0.52844,0.52589,0.51756,0.48844, 0.30711,0.53267,0.53322)
+Private<-round(Private*100,2)
+Public<-round(Public*100,2)
+df<-as.data.frame(cbind(Algorithms,Public,Private))
 
-
-library(reshape2) ; library(ggthemes);
 df.m<-melt(df, id.vars='Algorithms');
-ggplot(df.m, aes(Algorithms, value)) +   
+df.m$value <- as.double(df.m$value)
+ggplot(df.m, aes(Algorithms, value)) +
   geom_bar(aes(fill = variable), position = "dodge", stat="identity", alpha=.5)+
   labs(y="Accuracy", x="")+
   guides(fill=guide_legend(title="Leaderboards"))+
-  theme_tufte()+
+  theme_tufte() +
+  ylim(0,60) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
