@@ -1,6 +1,11 @@
+#***********************
+# Exploring Caret Package for variable selection
+#************************
 setwd("/home/didi/BGSE/semester2/adcomp/Kaggle")
+#Read the data
 data <- read.csv('news_popularity_training.csv',header=TRUE,sep=',')
-y <- data[,"popularity"]; 
+#Remove url and id and time delta
+y <- data[,"popularity"]; #identify popularity as separate variable
 x <- data[,-ncol(data)]; 
 x <- x[,-1]; 
 x <- x[,-1];
@@ -16,27 +21,27 @@ library("randomForest")
 
 
 # #Identify binary variables
-# binary<-as.matrix(apply(x,2,function(x) { all(x %in% 0:1) }))
-# binary<- subset(binary, binary[,1]==TRUE)
-# without<- c("data_channel_is_lifestyle","data_channel_is_entertainment", "data_channel_is_bus",
-#             "data_channel_is_socmed", "data_channel_is_tech", "data_channel_is_world", "weekday_is_monday",
-#             "weekday_is_tuesday", "weekday_is_wednesday", "weekday_is_thursday", "weekday_is_friday",
-#             "weekday_is_saturday","weekday_is_sunday", "is_weekend")
-# 
-# normx<-x[-c("data_channel_is_lifestyle","data_channel_is_entertainment", "data_channel_is_bus",
-#              "data_channel_is_socmed", "data_channel_is_tech", "data_channel_is_world", "weekday_is_monday",
-#              "weekday_is_tuesday", "weekday_is_wednesday", "weekday_is_thursday", "weekday_is_friday",
-#              "weekday_is_saturday","weekday_is_sunday", "is_weekend")]
-# 
-# new<- subset(x, select=without)
-# bla<- subset(x, select=-without)
-# 
+binary<-as.matrix(apply(x,2,function(x) { all(x %in% 0:1) }))
+binary<- subset(binary, binary[,1]==TRUE)
+without<- c("data_channel_is_lifestyle","data_channel_is_entertainment", "data_channel_is_bus",
+             "data_channel_is_socmed", "data_channel_is_tech", "data_channel_is_world", "weekday_is_monday",
+             "weekday_is_tuesday", "weekday_is_wednesday", "weekday_is_thursday", "weekday_is_friday",
+             "weekday_is_saturday","weekday_is_sunday", "is_weekend")
+ 
+normx<-x[-c("data_channel_is_lifestyle","data_channel_is_entertainment", "data_channel_is_bus",
+              "data_channel_is_socmed", "data_channel_is_tech", "data_channel_is_world", "weekday_is_monday",
+              "weekday_is_tuesday", "weekday_is_wednesday", "weekday_is_thursday", "weekday_is_friday",
+              "weekday_is_saturday","weekday_is_sunday", "is_weekend")]
+
+ new<- subset(x, select=without)
+ new2<- subset(x, select=-without)
+ 
 # normx<-x[, !(colnames(x) %in% without)]
 # #predictors are centered and scaled 
- normalization <- preProcess(x, method = "scale") #estimates the necessary parameters to scale and center
- x <- predict(normalization, x) #actually scale and center them 
-# #note we can estimate the center and scale estimates on training set and 
-# #then apply it to ANY set: http://topepo.github.io/caret/preprocess.html
+normalization <- preProcess(x, method = "scale") #estimates the necessary parameters to scale and center
+x <- predict(normalization, x) #actually scale and center them 
+#note we can estimate the center and scale estimates on training set and 
+#then apply it to ANY set: http://topepo.github.io/caret/preprocess.html
 x <- as.data.frame(x)
 subsets <- c(1:5, 10, 15, 20, 25) #numbers of predictors 
 
