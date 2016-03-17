@@ -38,7 +38,7 @@
 CVensemble <- function(data, y, rounds, threads=2, ram='4g') {
 
   #Load required packages
-  if (!require("xgboost")) install.packages("xgboost"); library(xgboost)
+  if (!require("xgboost")) install.packages("xgboost", repos=c("http://rstudio.org/_packages", "http://cran.rstudio.com")); library(xgboost)
   if (!require("extraTrees")) install.packages("extraTrees"); library(extraTrees)
   if (!require("plyr")) install.packages("plyr"); library(plyr)
   if (!require("C50")) install.packages("C50"); library(C50)
